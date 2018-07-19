@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!-- Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license.
+See LICENSE in the source repository root for complete license information. -->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Send Mail</title>
+        <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="/static/css/site.css?version=1.22" />
+    </head>
+    <body>
+        <div class="container homepage-container">
+            <h1>Send Mail from Microsoft Graph</h1>
+            <p>This sample shows how to work with the following Microsoft Graph APIs:</p>
+            <table class="graph-apis">
+                <tr>
+                    <th>Graph Endpoint</th>
+                    <th>Documentation Link</th>
+                </tr>
+                <tr>
+                    <td class="endpoint">/me</td>
+                    <td><a href="https://developer.microsoft.com/en-us/graph/docs/api-reference/v1.0/api/user_get" target="_blank">Get a user</a></td>
+                </tr>
+                <tr>
+                    <td class="endpoint">/me/photo</td>
+                    <td><a href="https://developer.microsoft.com/en-us/graph/docs/api-reference/v1.0/api/profilephoto_get" target="_blank">Get photo</a></td>
+                </tr>
+                <tr>
+                    <td class="endpoint">/me/drive/root/children/{filename}/content</td>
+                    <td><a href="https://developer.microsoft.com/en-us/graph/docs/api-reference/v1.0/api/driveitem_put_content" target="_blank">Upload a DriveItem</a></td>
+                </tr>
+                <tr>
+                    <td class="endpoint">/me/drive/items/{itemId}/createLink</td>
+                    <td><a href="https://developer.microsoft.com/en-us/graph/docs/api-reference/v1.0/api/driveitem_createlink" target="_blank">Create sharing link</a></td>
+                </tr>
+                <tr>
+                    <td class="endpoint">/me/microsoft.graph.sendMail</td>
+                    <td><a href="https://developer.microsoft.com/en-us/graph/docs/api-reference/v1.0/api/user_sendmail" target="_blank">Send mail</a></td>
+                </tr>
+            </table>
+            <p><button type="button" class="btn btn-success btn-lg" onclick="window.location.href='/login'">Connect</button></p>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,71 @@
+.mailform-table {
+    margin: 0 0 0 0;
+    width: 100%;
+    display: table;
+    font-size: 14px;
+    border: 6px solid #f0f0f0;
+}
+  
+  .mailform-table th {
+    background-color: #f0f0f0;
+    text-align: right;
+    vertical-align: top;
+    padding: 11px 9px 6px 6px;
+    width: 120px;
+}
+  
+  .mailform-table td {
+    font-family: Consolas,Monaco,Lucida Console,Courier New, monospace;
+    vertical-align: top;
+    background-color: #f0f0f0;
+    padding: 6px 12px 6px 0;
+}
+
+.form-inputs {
+    width: 100%;
+    padding: 4px;
+    border: .5px solid #cccccc;
+}
+
+.form-inputs-readonly {
+    width: 100%;
+    padding: 4px;
+    background-color: #d8d8d8;
+    border: .5px solid #cccccc;
+}
+
+.form-inputs-body {
+    width: 100%;
+    padding: 4px;
+    border: .5px solid #cccccc;
+    font-size: 11px;
+}
+
+.graph-apis {
+    margin-bottom: 20px;
+}
+
+.graph-apis th {
+    background: #5cb85c;
+    color: #ffffff;
+    padding: 8px;
+    font-size: 12px;
+}
+
+.graph-apis td {
+    background: #eeeeee;
+    padding: 8px;
+    border-bottom: 1px solid #aaaaaa;
+    font-size: 14px;
+}
+
+.endpoint {
+    font-family: Consolas,Monaco,Lucida Console,Courier New, monospace;
+}
+
+.profile-photo {
+    width: 110px;
+    height: 110px;
+    float: right;
+  }
+  
