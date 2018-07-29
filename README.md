@@ -1,1 +1,1 @@
-# Hacked Microsoft sample.
+# OneNote Exporter
