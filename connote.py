@@ -50,7 +50,7 @@ def authorized():
 
 @APP.route('/preexport')
 def preexport():
-    user_profile = MSGRAPH.get('me', headers=request_headers()).data
+    user_profile = MSGRAPH.get('me?$select=displayName,userPrincipalName', headers=request_headers()).data
     return flask.render_template('preexport.html',
                                  name=user_profile['displayName'],
                                  email=user_profile['userPrincipalName'])
@@ -67,41 +67,45 @@ def graph_generator(session, endpoint=None):
         yield from response.get('value')
         endpoint = response.get('@odata.nextLink')
 
+def get_notebook(notebook_id, notebook_name):
+    print(f"- {notebook_name}")
+    return {
+            'id': notebook_id,
+            'name': notebook_name,
+            'sections': [
+                get_section(section['id'], section['displayName'])
+                for section in MSGRAPH.get(f"me/onenote/notebooks/{notebook_id}/sections?$select=id,displayName").data['value']
+                if section['displayName'] == 'Done'
+                ]
+            }
+
+def get_section(section_id, section_name):
+    print(f"- - {section_name}")
+    return {
+            'id': section_id,
+            'name': section_name,
+            'pages': [
+                get_page(page['id'], page['title'])
+                for page in MSGRAPH.get(f"me/onenote/sections/{section_id}/pages?$select=id,title").data['value']
+                ]
+            }
+
+def get_page(page_id, page_title):
+    print(f"- - - {page_title}")
+    return {
+            'id': page_id,
+            'title': page_title,
+            'content': MSGRAPH.get(f"me/onenote/pages/{page_id}/content").data.decode("utf-8", "strict")
+            }
+
 @APP.route('/export')
 def export():
-    notebooks_response = MSGRAPH.get("me/onenote/notebooks")
-    notebooks = []
-    if str(notebooks_response.status).startswith('2'):
-        for notebook in notebooks_response.data['value']:
-            notebook_name = notebook['displayName']
-            if notebook_name == 'Archive':
-                print(f"- {notebook_name}")
-                notebook_id = notebook['id']
-                notebook = {'id': notebook_id, 'name': notebook_name, 'sections': []}
-                notebooks.append(notebook)
-                sections_response = MSGRAPH.get(f"me/onenote/notebooks/{notebook_id}/sections")
-                for section in sections_response.data['value']:
-                    section_name = section['displayName']
-                    if section_name == 'Done':
-                        print(f"- - {section_name}")
-                        section_id = section['id']
-                        section = {'id': section_id, 'name': section_name, 'pages': []}
-                        notebook['sections'].append(section)
-                        pages_response = MSGRAPH.get(f"me/onenote/sections/{section_id}/pages")
-                        for page in pages_response.data['value']:
-                            page_id = page['id']
-                            page_title = page['title']
-                            print(f"- - - {page_title}")
-                            page = {'id': page_id, 'title': page_title, 'content': ''}
-                            section['pages'].append(page)
-                            content_response = MSGRAPH.get(f"me/onenote/pages/{page_id}/content")
-                            page['content'] = urllib.parse.quote(str(content_response.data))
-
-    else:
-        print("Oh dear")
-        print(str(notebooks_response.status))
-
-    return flask.render_template('exported.html', notebooks=notebooks)
+    return flask.render_template('exported.html', notebooks=[
+        get_notebook(notebook['id'], notebook['displayName'])
+        for notebook in MSGRAPH.get("me/onenote/notebooks?$select=id,displayName").data['value']
+        if notebook['displayName'] == 'Archive'
+        ]
+        )
 
 @MSGRAPH.tokengetter
 def get_token():
